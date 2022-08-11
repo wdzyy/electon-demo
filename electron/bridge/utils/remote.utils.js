@@ -1,7 +1,8 @@
 /**
  * electron 对象工具类
  */
-import remote from '@electron/remote/main';
+// 🚧🚧🚧🚧
+import * as remote from '@electron/remote';
 import path from 'path';
 import fs from 'fs';
 const isDev = process.env.NODE_ENV === 'development';
@@ -46,10 +47,17 @@ const getAppUserData = async () => {
 
 const getConfigPath = () => {
   const fpath = isDev ? path.resolve(path.join(__dirname), '../../../default.conf') : getExePath();
-  console.log(fpath, 'fpath');
+  // console.log(fpath, 'fpath');
   if (isDev) {
+    // 开发环境
+    // 🚧🚧🚧🚧
+    return path.join(process.cwd(), 'default.conf');
     return fpath;
   }
+  // 生产环境
+  // 🚧🚧🚧🚧
+  return path.join(__dirname, '../default.conf');
+
   if (getSystem() === 1) {
     return fpath + '/resources/extraResources/default.conf';
   }
@@ -57,6 +65,7 @@ const getConfigPath = () => {
 };
 
 const readConfig = () => {
+  console.log('remote.utils.js ----', getConfigPath());
   const res = fs.readFileSync(getConfigPath(), function (err, data) {
     if (err) {
       return console.error(err);

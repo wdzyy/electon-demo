@@ -19,6 +19,7 @@ export default defineConfig({
         vite: {
           build: {
             outDir: 'dist/electron/main',
+            minify: false,
           },
         },
       },
@@ -32,6 +33,7 @@ export default defineConfig({
             // For debug
             sourcemap: 'inline',
             outDir: 'dist/electron/preload',
+            minify: false,
           },
         },
       },
@@ -76,7 +78,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 2000,
     //关闭brotliSize显示可以稍微减少包装时间
     brotliSize: false,
-    minify: 'terser',
+    minify: false, // 'terser',
     terserOptions: {
       compress: {
         keep_infinity: true,

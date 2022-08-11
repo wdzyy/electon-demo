@@ -45,11 +45,18 @@ const getAppUserData = async () => {
 };
 
 const getConfigPath = () => {
+  // console.log('app.utils.js ----+++', process.ROOT_PATH.dist);
   const fpath = isDev ? path.resolve(path.join(__dirname), '../../../default.conf') : getExePath();
 
   if (isDev) {
+    // 开发环境
+    // 🚧🚧🚧🚧
+    return path.join(process.ROOT_PATH.dist, '../default.conf');
     return fpath;
   }
+  // 生产环境
+  // 🚧🚧🚧🚧
+  return path.join(__dirname, '../default.conf');
   if (getSystem() === 1) {
     return fpath + '/resources/extraResources/default.conf';
   }

@@ -26,6 +26,9 @@ export const ROOT_PATH = {
   public: join(__dirname, app.isPackaged ? '../..' : '../../../public'),
 };
 
+// 🚧🚧🚧🚧
+process['ROOT_PATH'] = ROOT_PATH
+
 let mainWindow: BrowserWindow | null = null;
 // Here, you can also use other preload
 const preload = join(__dirname, '../preload/index.js');
@@ -44,15 +47,15 @@ async function createWindow() {
     },
   });
 
+  remote.initialize();
+  remote.enable(mainWindow.webContents);
+
   if (app.isPackaged) {
     mainWindow.loadFile(indexHtml);
   } else {
     mainWindow.loadURL(url);
   }
   mainWindow.webContents.openDevTools();
-
-  remote.initialize();
-  remote.enable(mainWindow.webContents);
 
   bridge.appUtils.readConfig().then((res) => {
     bridge.appUtils.AppConfig = JSON.parse(res);
@@ -96,7 +99,7 @@ app.on('activate', () => {
 });
 
 // new window example arg: new windows url
-ipcMain.handle('open-mainWindow', (event, arg) => {
+ipcMain.handle('open-mainWindow', (_event, arg) => {
   const childWindow = new BrowserWindow({
     webPreferences: {
       preload,
